@@ -1,0 +1,247 @@
+/* Basic Styles */
+:root {
+    --primary: #2c3e50;
+    --secondary: #34495e;
+    --accent: #3498db;
+    --background: #f4f4f9;
+    --text: #2c3e50;
+    --card-bg: white;
+    --comment-bg: #e8f4fd;
+    --comment-border: #bbdefb;
+}
+
+body {
+    font-family: 'Roboto', 'Cairo', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background);
+    color: var(--text);
+    transition: all 0.3s ease;
+}
+
+/* RTL Support */
+body[dir="rtl"] {
+    text-align: right;
+    font-family: 'Cairo', 'Roboto', sans-serif;
+}
+
+/* Header & Language Switcher */
+header {
+    background-color: var(--primary);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+}
+
+.lang-switch {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.lang-switch button {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.lang-switch button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.lang-switch button.active {
+    background: white;
+    color: var(--primary);
+    border-color: white;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+}
+
+header p {
+    margin: 10px 0 0;
+    opacity: 0.8;
+}
+
+/* Layout */
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    /* Changed min-width for better chart display */
+    gap: 30px;
+    padding: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    /* transition: transform 0.2s; */
+}
+
+/* .card:hover {
+    transform: translateY(-5px);
+} */
+
+.card h2 {
+    color: var(--primary);
+    font-size: 1.4rem;
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 10px;
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+    /* Fixed height for charts */
+    width: 100%;
+}
+
+canvas {
+    max-height: 100% !important;
+}
+
+/* Comment Sections */
+.comment-section {
+    margin-top: 20px;
+    background-color: var(--comment-bg);
+    border-radius: 8px;
+    padding: 15px;
+    border-left: 5px solid var(--accent);
+}
+
+body[dir="rtl"] .comment-section {
+    border-left: none;
+    border-right: 5px solid var(--accent);
+}
+
+.comment-title {
+    margin: 0 0 10px 0;
+    font-size: 1rem;
+    color: var(--secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.comment-section p {
+    margin: 0;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+
+/* Discussion Section */
+.discussion-section {
+    max-width: 1000px;
+    /* Reduced width for better readability */
+    margin: 40px auto;
+    padding: 40px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.discussion-section h2 {
+    color: var(--primary);
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    border-bottom: 3px solid var(--accent);
+    display: inline-block;
+    padding-bottom: 10px;
+    /* Center the underline logic somewhat */
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.discussion-content {
+    line-height: 1.8;
+    color: #444;
+}
+
+.discussion-content h3 {
+    color: var(--secondary);
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+    margin-top: 30px;
+}
+
+.discussion-content h4 {
+    color: var(--accent);
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.discussion-content blockquote {
+    background: #f9f9f9;
+    border-left: 4px solid #bdc3c7;
+    margin: 20px 0;
+    padding: 15px 20px;
+    font-style: italic;
+    border-radius: 4px;
+}
+
+body[dir="rtl"] .discussion-content blockquote {
+    border-left: none;
+    border-right: 4px solid #bdc3c7;
+}
+
+.discussion-content ul {
+    list-style-type: none;
+    /* Changed to none for custom bullets if needed, or stick to circle */
+    padding-left: 20px;
+}
+
+body[dir="rtl"] .discussion-content ul {
+    padding-left: 0;
+    padding-right: 20px;
+}
+
+.discussion-content li {
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.discussion-content li:before {
+    content: "•";
+    color: var(--accent);
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+body[dir="rtl"] .discussion-content li:before {
+    float: right;
+    margin-right: -1em;
+    margin-left: 0;
+}
+
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+        padding: 15px;
+    }
+
+    .discussion-section {
+        margin: 20px;
+        padding: 20px;
+    }
+}

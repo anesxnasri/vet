@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord Vétérinaire</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="lang-switch">
+            <button onclick="setLanguage('fr')" class="active">Français</button>
+            <button onclick="setLanguage('ar')">العربية</button>
+        </div>
+        <h1 id="page-title">Tableau de Bord de l'Enquête Vétérinaire</h1>
+        <p id="page-subtitle">Analyse de la santé et de la production du bétail à Blida</p>
+    </header>
+
+    <div class="container">
+        <!-- Chart 1: Breeds -->
+        <div class="card">
+            <h2 id="title-breeds">Distribution des Races</h2>
+            <div class="chart-container">
+                <canvas id="breedsChart"></canvas>
+            </div>
+            <div class="comment-section">
+                <h3 class="comment-title" id="comment-title-breeds">Commentaire</h3>
+                <p id="comment-breeds">Chargement...</p>
+            </div>
+        </div>
+
+        <!-- Chart 2: Production -->
+        <div class="card">
+            <h2 id="title-production">Types de Production</h2>
+            <div class="chart-container">
+                <canvas id="productionChart"></canvas>
+            </div>
+            <div class="comment-section">
+                <h3 class="comment-title" id="comment-title-production">Commentaire</h3>
+                <p id="comment-production">Chargement...</p>
+            </div>
+        </div>
+
+        <!-- Chart 3: Disease -->
+        <div class="card">
+            <h2 id="title-disease">Prévalence des Maladies</h2>
+            <div class="chart-container">
+                <canvas id="diseaseChart"></canvas>
+            </div>
+            <div class="comment-section">
+                <h3 class="comment-title" id="comment-title-disease">Commentaire</h3>
+                <p id="comment-disease">Chargement...</p>
+            </div>
+        </div>
+
+        <!-- Chart 4: Abortion Frequency -->
+        <div class="card">
+            <h2 id="title-abortion-freq">Fréquence des Avortements</h2>
+            <div class="chart-container">
+                <canvas id="abortionFreqChart"></canvas>
+            </div>
+            <div class="comment-section">
+                <h3 class="comment-title" id="comment-title-abortion-freq">Commentaire</h3>
+                <p id="comment-abortion-freq">Chargement...</p>
+            </div>
+        </div>
+
+        <!-- Chart 5: Abortion Stages -->
+        <div class="card">
+            <h2 id="title-abortion-stage">Stades d'Avortement</h2>
+            <div class="chart-container">
+                <canvas id="abortionStageChart"></canvas>
+            </div>
+            <div class="comment-section">
+                <h3 class="comment-title" id="comment-title-abortion-stage">Commentaire</h3>
+                <p id="comment-abortion-stage">Chargement...</p>
+            </div>
+        </div>
+
+        <!-- Chart 6: Mortality -->
+        <div class="card">
+            <h2 id="title-mortality">Taux de Mortalité</h2>
+            <div class="chart-container">
+                <canvas id="mortalityChart"></canvas>
+            </div>
+            <div class="comment-section">
+                <h3 class="comment-title" id="comment-title-mortality">Commentaire</h3>
+                <p id="comment-mortality">Chargement...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="discussion-section">
+        <h2 id="discussion-title">Discussion</h2>
+        <div id="discussion-content" class="discussion-content">
+            <!-- Content will be injected by JS -->
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
