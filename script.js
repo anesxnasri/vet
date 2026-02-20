@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Data Processing (Same as before) ---
+    // --- Data Processing ---
     const breedsData = {
         'Locales': surveyData.reduce((acc, curr) => acc + (curr.races_locales || 0), 0),
         'Mixtes': surveyData.reduce((acc, curr) => acc + (curr.races_mixtes || 0), 0),
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return acc;
     }, {});
 
-    // --- Chart Instances (Global to update later) ---
+    // --- Chart Instances ---
     let charts = {};
 
     // --- Translations ---
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 abortionFreq: (k) => `Niveau ${k}`,
                 abortionStage: ['Début', 'Milieu', 'Fin', 'Variable'],
                 mortality: (k) => `Niveau ${k}`,
-                occurrences: 'Occurrences',
+                occurrences: 'Cas Recensés', // Changed from 'Occurrences' to be clearly French
                 count: 'Nombre'
             },
             comments: {
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 abortionFreq: (k) => `المستوى ${k}`,
                 abortionStage: ['بداية', 'وسط', 'نهاية', 'متغير'],
                 mortality: (k) => `المستوى ${k}`,
-                occurrences: 'تكرار',
+                occurrences: 'الحالات المرصودة',
                 count: 'العدد'
             },
             comments: {
@@ -154,8 +154,10 @@ document.addEventListener('DOMContentLoaded', () => {
     window.setLanguage = (lang) => {
         const t = translations[lang];
         const isRTL = lang === 'ar';
-        document.body.dir = isRTL ? 'rtl' : 'ltr';
-        document.documentElement.lang = lang;
+        const html = document.documentElement;
+
+        html.dir = isRTL ? 'rtl' : 'ltr';
+        html.lang = lang;
 
         // Update Text Content
         document.getElementById('page-title').innerText = t.title;
@@ -167,12 +169,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update Chart Titles & Comments
         const chartIds = ['breeds', 'production', 'disease', 'abortionFreq', 'abortionStage', 'mortality'];
-        const chartKeys = ['breeds', 'production', 'disease', 'abortionFreq', 'abortionStage', 'mortality']; // mapping keys
+        const chartKeys = ['breeds', 'production', 'disease', 'abortionFreq', 'abortionStage', 'mortality'];
 
         chartIds.forEach((id, index) => {
             const key = chartKeys[index];
-            document.getElementById(`title-${id === 'abortionFreq' ? 'abortion-freq' : id === 'abortionStage' ? 'abortion-stage' : id}`).innerText = t.titles[key];
-            document.getElementById(`comment-${id === 'abortionFreq' ? 'abortion-freq' : id === 'abortionStage' ? 'abortion-stage' : id}`).innerText = t.comments[key];
+            const titleEl = document.getElementById(`title-${id === 'abortionFreq' ? 'abortion-freq' : id === 'abortionStage' ? 'abortion-stage' : id}`);
+            if (titleEl) titleEl.innerText = t.titles[key];
+
+            const commentEl = document.getElementById(`comment-${id === 'abortionFreq' ? 'abortion-freq' : id === 'abortionStage' ? 'abortion-stage' : id}`);
+            if (commentEl) commentEl.innerText = t.comments[key];
         });
 
         // Update Discussion Content
@@ -182,7 +187,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.lang-switch button').forEach(btn => {
             btn.classList.remove('active');
         });
-        document.querySelector(`.lang-switch button[onclick="setLanguage('${lang}')"]`).classList.add('active');
+        const activeBtn = document.querySelector(`.lang-switch button[onclick="setLanguage('${lang}')"]`);
+        if (activeBtn) activeBtn.classList.add('active');
 
         // Re-render charts with new labels
         renderCharts(lang);
@@ -194,12 +200,25 @@ document.addEventListener('DOMContentLoaded', () => {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-                legend: { position: 'bottom' }
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        font: {
+                            family: lang === 'ar' ? 'Cairo' : 'Roboto'
+                        }
+                    }
+                },
+                tooltip: {
+                    titleFont: { family: lang === 'ar' ? 'Cairo' : 'Roboto' },
+                    bodyFont: { family: lang === 'ar' ? 'Cairo' : 'Roboto' }
+                }
             }
         };
 
         // Helper to destroy old charts
-        Object.values(charts).forEach(chart => chart.destroy());
+        Object.values(charts).forEach(chart => {
+            if (chart) chart.destroy();
+        });
 
         // 1. Breeds
         charts.breeds = new Chart(document.getElementById('breedsChart'), {
@@ -240,7 +259,10 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             options: {
                 ...commonOptions,
-                scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+                scales: {
+                    y: { beginAtZero: true, ticks: { stepSize: 1 } },
+                    x: { ticks: { font: { family: lang === 'ar' ? 'Cairo' : 'Roboto' } } }
+                }
             }
         });
 
@@ -257,7 +279,10 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             options: {
                 ...commonOptions,
-                scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+                scales: {
+                    y: { beginAtZero: true, ticks: { stepSize: 1 } },
+                    x: { ticks: { font: { family: lang === 'ar' ? 'Cairo' : 'Roboto' } } }
+                }
             }
         });
 
@@ -287,7 +312,10 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             options: {
                 ...commonOptions,
-                scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+                scales: {
+                    y: { beginAtZero: true, ticks: { stepSize: 1 } },
+                    x: { ticks: { font: { family: lang === 'ar' ? 'Cairo' : 'Roboto' } } }
+                }
             }
         });
     }
